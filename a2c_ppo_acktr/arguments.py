@@ -6,7 +6,7 @@ import torch
 def get_args():
     parser = argparse.ArgumentParser(description='RL')
     parser.add_argument(
-        '--algo', default='a2c', help='algorithm to use: a2c | ppo | acktr')
+        '--algo', default='ppo', help='algorithm to use: a2c | ppo | acktr')
     parser.add_argument(
         '--gail',
         action='store_true',
@@ -80,17 +80,17 @@ def get_args():
     parser.add_argument(
         '--num-steps',
         type=int,
-        default=5,
+        default=64,
         help='number of forward steps in A2C (default: 5)')
     parser.add_argument(
         '--ppo-epoch',
         type=int,
-        default=4,
+        default=10,
         help='number of ppo epochs (default: 4)')
     parser.add_argument(
         '--num-mini-batch',
         type=int,
-        default=32,
+        default=4,
         help='number of batches for ppo (default: 32)')
     parser.add_argument(
         '--clip-param',
@@ -105,7 +105,7 @@ def get_args():
     parser.add_argument(
         '--save-interval',
         type=int,
-        default=100,
+        default=10,
         help='save interval, one save per n updates (default: 100)')
     parser.add_argument(
         '--eval-interval',
@@ -115,12 +115,12 @@ def get_args():
     parser.add_argument(
         '--num-env-steps',
         type=int,
-        default=10e6,
+        default=4e7,
         help='number of environment steps to train (default: 10e6)')
     parser.add_argument(
         '--env-name',
-        default='PongNoFrameskip-v4',
-        help='environment to train on (default: PongNoFrameskip-v4)')
+        default='HumanoidDeepMimicWalkBulletEnv-v1',
+        help='environment to train on (default: HumanoidDeepMimicWalkBulletEnv-v1)')
     parser.add_argument(
         '--log-dir',
         default='/tmp/gym/',
