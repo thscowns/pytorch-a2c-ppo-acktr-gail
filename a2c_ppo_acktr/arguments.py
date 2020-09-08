@@ -24,7 +24,7 @@ def get_args():
     parser.add_argument(
         '--gail-epoch', type=int, default=5, help='gail epochs (default: 5)')
     parser.add_argument(
-        '--lr', type=float, default=7e-4, help='learning rate (default: 7e-4)')
+        '--lr', type=float, default=1e-4, help='learning rate (default: 7e-4)')
     parser.add_argument(
         '--eps',
         type=float,
@@ -58,7 +58,7 @@ def get_args():
     parser.add_argument(
         '--value-loss-coef',
         type=float,
-        default=0.5,
+        default=400,
         help='value loss coefficient (default: 0.5)')
     parser.add_argument(
         '--max-grad-norm',
@@ -105,7 +105,7 @@ def get_args():
     parser.add_argument(
         '--save-interval',
         type=int,
-        default=10,
+        default=100,
         help='save interval, one save per n updates (default: 100)')
     parser.add_argument(
         '--eval-interval',

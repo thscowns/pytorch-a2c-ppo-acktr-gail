@@ -18,11 +18,15 @@ from a2c_ppo_acktr.envs import make_vec_envs
 from a2c_ppo_acktr.model import Policy
 from a2c_ppo_acktr.storage import RolloutStorage
 from evaluation import evaluate
-
+import yaml
 
 def main():
     args = get_args()
-
+    with open('hyperparameter.yml') as f:
+        hyperparameter_dict = yaml.safe_load(f)
+        if args.env_name in hyperparameter_dict.keys():
+            hyperparams = hyperparameter_dict[args.env_name]
+    print(hyperparams)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
 
@@ -158,13 +162,14 @@ def main():
                                  args.gae_lambda, args.use_proper_time_limits)
 
         value_loss, action_loss, dist_entropy = agent.update(rollouts)
-
+        print("value, action, entropy:", value_loss, action_loss, dist_entropy)
         rollouts.after_update()
 
         # save for every interval-th episode or for the last epoch
         if (j % args.save_interval == 0
                 or j == num_updates - 1) and args.save_dir != "":
             save_path = os.path.join(args.save_dir, args.algo)
+            print(save_path)
             try:
                 os.makedirs(save_path)
             except OSError:
