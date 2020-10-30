@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 import torch
-
+import time
 from a2c_ppo_acktr.envs import VecPyTorch, make_vec_envs
 from a2c_ppo_acktr.utils import get_render_func, get_vec_normalize
 from pybullet_envs.deep_mimic.gym_env.deep_mimic_env import HumanoidDeepMimicWalkBulletEnv
@@ -28,7 +28,7 @@ def main():
         help='environment to train on (default: HumanoidDeepMimicWalkBulletEnv-v1)')
     parser.add_argument(
         '--load-dir',
-        default='./trained_models/ppo',
+        default='./trained_models/a2c',
         help='directory to save agent logs (default: ./trained_models/)')
     parser.add_argument(
         '--non-det',
@@ -55,7 +55,7 @@ def main():
 
     # We need to use the same statistics for normalization as used in training
     actor_critic, ob_rms = \
-                torch.load(os.path.join(args.load_dir, args.env_name + ".pt"))
+                torch.load(os.path.join(args.load_dir, args.env_name + "_39061.pt"))
 
     vec_norm = get_vec_normalize(env)
     if vec_norm is not None:
@@ -80,6 +80,7 @@ def main():
                 torsoId = i
 
     while True:
+        time.sleep(0.1)
         with torch.no_grad():
             value, action, _, recurrent_hidden_states = actor_critic.act(
                 obs, recurrent_hidden_states, masks, deterministic=args.det)

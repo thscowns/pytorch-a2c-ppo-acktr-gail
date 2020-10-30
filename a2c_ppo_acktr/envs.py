@@ -25,7 +25,8 @@ except ImportError:
 
 try:
     import pybullet_envs
-    from pybullet_envs.deep_mimic.gym_env.deep_mimic_env import HumanoidDeepMimicWalkBulletEnv
+    from a2c_ppo_acktr.env import HumanoidDeepMimicWalkBulletEnv
+    # from pybullet_envs.deep_mimic.gym_env.deep_mimic_env import HumanoidDeepMimicWalkBulletEnv
 except ImportError:
     pass
 
@@ -38,7 +39,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, test=False):
         elif test:
             env = HumanoidDeepMimicWalkBulletEnv(renders=True)
         else:
-            env = gym.make(env_id)
+            env = HumanoidDeepMimicWalkBulletEnv()
 
 
         is_atari = hasattr(gym.envs, 'atari') and isinstance(
